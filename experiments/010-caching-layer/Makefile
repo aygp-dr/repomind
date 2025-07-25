@@ -1,7 +1,7 @@
 # Experiment 10: Caching Layer
 # Intelligent caching to reduce API calls and improve performance
 
-.PHONY: all test clean setup validate-deps help
+.PHONY: all test clean setup validate-deps help run
 
 # Configuration
 OUTPUT_DIR := test-outputs
@@ -57,3 +57,7 @@ clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -rf $(CACHE_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running caching layer demonstration..."
+	@./demo-caching.scm
