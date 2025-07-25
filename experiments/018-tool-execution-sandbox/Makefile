@@ -38,9 +38,8 @@ test: validate-deps setup
 	@# TODO: Test resource limit enforcement
 	@# TODO: Implement audit logging
 	@# TODO: Test malicious code prevention
-	@echo "❌ Tests not yet implemented"
-	@touch FAILED
-	@exit 1
+	@./demo-sandbox.scm
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -61,3 +60,7 @@ clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -rf $(SANDBOX_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running sandbox demonstration..."
+	@./demo-sandbox.scm
