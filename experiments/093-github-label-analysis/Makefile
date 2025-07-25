@@ -19,6 +19,7 @@ help:
 	@echo "Targets:"
 	@echo "  make test          - Run analysis"
 	@echo "  make analyze-labels - Analyze labels from public repos"
+	@echo "  make labels-report  - Generate comprehensive org-wide report"
 	@echo "  make create-labels  - Create recommended labels"
 	@echo "  make setup         - Set up experiment environment"
 	@echo "  make clean         - Clean analysis files"
@@ -37,6 +38,15 @@ analyze-labels:
 	@./analyze-public-labels.sh > $(OUTPUT_DIR)/label-analysis.txt
 	@./recommend-labels.sh < $(OUTPUT_DIR)/label-analysis.txt > $(OUTPUT_DIR)/label-recommendations.txt
 	@echo "✅ Analysis complete"
+
+labels-report:
+	@echo "📊 Generating comprehensive label report..."
+	@mkdir -p $(OUTPUT_DIR)
+	@./analyze-all-labels.sh > $(OUTPUT_DIR)/all-labels-report.txt
+	@./recommend-org-labels.sh > $(OUTPUT_DIR)/org-recommendations.txt
+	@echo "✅ Reports generated:"
+	@echo "   - $(OUTPUT_DIR)/all-labels-report.txt"
+	@echo "   - $(OUTPUT_DIR)/org-recommendations.txt"
 
 create-labels:
 	@echo "🏷️  Creating recommended labels for repomind..."

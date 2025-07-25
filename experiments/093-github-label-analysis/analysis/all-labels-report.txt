@@ -1,0 +1,94 @@
+🔍 Analyzing labels across all public aygp-dr repositories...
+===========================================================
+
+Collecting labels from repositories...
+...........................................................................
+
+## Most Used Labels Across Organization
+=====================================
+wontfix                                   75 repos
+question                                  75 repos
+invalid                                   75 repos
+help wanted                               75 repos
+good first issue                          75 repos
+enhancement                               75 repos
+duplicate                                 75 repos
+documentation                             75 repos
+bug                                       75 repos
+performance                               10 repos
+priority:medium                            9 repos
+priority:high                              9 repos
+testing                                    8 repos
+priority:low                               8 repos
+priority:critical                          8 repos
+status:wont-fix                            6 repos
+status:ready                               6 repos
+status:needs-review                        6 repos
+status:in-progress                         6 repos
+status:blocked                             6 repos
+
+## Label Categories Analysis
+==========================
+
+### Labels with Prefixes (structured approach)
+priority:medium                            9 repos
+priority:high                              9 repos
+priority:low                               8 repos
+priority:critical                          8 repos
+status:wont-fix                            6 repos
+status:ready                               6 repos
+status:needs-review                        6 repos
+status:in-progress                         6 repos
+status:blocked                             6 repos
+type:test                                  1 repos
+type:security                              1 repos
+type:refactor                              1 repos
+type:performance                           1 repos
+type:feature                               1 repos
+type:enhancement                           1 repos
+
+### Type/Category Labels
+question                                  75 repos
+enhancement                               75 repos
+documentation                             75 repos
+bug                                       75 repos
+testing                                    8 repos
+
+### Status Labels
+wontfix                                   75 repos
+invalid                                   75 repos
+help wanted                               75 repos
+good first issue                          75 repos
+duplicate                                 75 repos
+needs-review                               1 repos
+in-progress                                1 repos
+blocked                                    1 repos
+
+### Priority Labels
+priority:medium                            9 repos
+priority:high                              9 repos
+priority:low                               8 repos
+priority:critical                          8 repos
+high-priority                              3 repos
+priority: medium                           1 repos
+priority: low                              1 repos
+priority: high                             1 repos
+
+## Unique Label Colors Used
+========================
+#ffffff   used in  81 labels
+#d73a4a   used in  80 labels
+#7057ff   used in  78 labels
+#008672   used in  78 labels
+#0075ca   used in  78 labels
+#e4e669   used in  77 labels
+#d876e3   used in  76 labels
+#cfd3d7   used in  76 labels
+#a2eeef   used in  76 labels
+#0e8a16   used in  18 labels
+
+## Repository Statistics
+=====================
+Total public repositories:       75
+Repositories with custom labels: 31
+Total unique labels found:      202
