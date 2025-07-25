@@ -25,13 +25,25 @@ Establish connection to GitHub API and implement basic data fetching capabilitie
 ## Running the Experiment
 ```bash
 export GITHUB_TOKEN=your_token_here
-make test TEST_REPO=owner/repo
+
+# Test with Guile (requires guile-gnutls)
+make fetch TEST_REPO=owner/repo
+
+# Test with curl (fallback)
+make fetch-curl TEST_REPO=owner/repo
 ```
 
 ## Dependencies
 - GITHUB_TOKEN environment variable
 - Network connectivity
 - GitHub API access
+- guile-gnutls (for native Guile HTTPS support)
+
+## Key Learnings
+- Guile's web client requires gnutls module for HTTPS
+- Providing fallback implementations improves robustness
+- Error handling should include remediation instructions
+- See EXPERIMENT_RESULTS.md for detailed findings
 
 ## Results
-Status: ⏳ Pending - Scaffolding complete
+Status: ✅ Tested - Connection methods validated, gnutls dependency identified

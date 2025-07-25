@@ -55,6 +55,11 @@ fetch: validate-deps
 	@echo "🔍 Testing GitHub API connection..."
 	@TEST_REPO="$(TEST_REPO)" ./test-connection.scm
 
+# Alternative test using curl (works without gnutls)
+fetch-curl: validate-deps
+	@echo "🔍 Testing GitHub API connection (curl)..."
+	@TEST_REPO="$(TEST_REPO)" ./test-connection-curl.sh
+
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
