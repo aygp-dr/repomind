@@ -144,7 +144,6 @@ init: $(BUILD_SENTINEL)
 	@echo "Initializing RepoMind..."
 	@mkdir -p $(ARCHIVE_DIR)
 	@grep -q "^$(ARCHIVE_DIR)/" .gitignore 2>/dev/null || echo "$(ARCHIVE_DIR)/" >> .gitignore
-	@grep -q "^\\..*-stamp" .gitignore 2>/dev/null || echo ".*-stamp" >> .gitignore
 	@echo "✅ RepoMind initialized"
 
 # Archive directory sentinel
