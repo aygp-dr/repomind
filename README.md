@@ -25,49 +25,91 @@ RepoMind follows an **experiment-driven development** approach where each capabi
 
 ```mermaid
 graph TD
-    A[Core System] --> B[User Interfaces]
-    A --> C[Data Layer]
-    B --> D[Production Systems]
-    C --> D
-    D --> E[Observability]
-    E --> F[Advanced Features]
-    F --> G[Production Scale]
-    F --> H[Developer Experience]
-    G --> I[Development Methodology]
-    H --> I
+    %% Core Specifications & Contracts
+    A[Spec System<br/>003] --> B[Unit Tests<br/>071]
+    A --> C[Validation<br/>005]
+    
+    %% LLM Integration Core
+    D[Ollama Integration<br/>001-002] --> E[Pipeline<br/>007]
+    C --> E
+    E --> F[Query Interface<br/>013]
+    
+    %% Integration & Testing
+    B --> G[Integration Tests<br/>034]
+    E --> G
+    G --> H[Monitoring<br/>074]
+    H --> I[Telemetry<br/>014]
+    I --> J[Logging<br/>036]
+    
+    %% Storage & Data
+    K[Caching<br/>010] --> L[Storage Layer<br/>026-030]
+    E --> K
+    L --> M[Analytics DB<br/>037]
+    
+    %% User Interfaces
+    F --> N[CLI<br/>021]
+    F --> O[Web API<br/>022]
+    N --> P[Web UI<br/>023]
+    O --> P
+    
+    %% Production Systems
+    G --> Q[CI/CD<br/>033]
+    H --> Q
+    Q --> R[Deployment<br/>059-063]
+    
+    %% Security & Performance
+    S[Security<br/>043] --> T[Performance<br/>044]
+    R --> S
+    T --> U[Enterprise<br/>045]
+    
+    %% Development Methodology
+    B --> V[TDD/BDD<br/>070-071]
+    V --> W[DDD/CQRS<br/>069,073]
+    
+    %% Visualization & Mapping (Future)
+    X[Development Visualization<br/>TBD] -.-> A
+    X -.-> E
+    X -.-> G
+    
+    classDef core fill:#e1f5fe
+    classDef test fill:#f3e5f5
+    classDef integration fill:#e8f5e8
+    classDef ui fill:#fff3e0
+    classDef production fill:#fce4ec
+    
+    class A,C,D,E core
+    class B,G,V,W test
+    class H,I,J,M integration
+    class F,N,O,P ui
+    class Q,R,S,T,U production
 ```
 
 ### Experiment-Driven Development Philosophy
 
-**Core System Foundation**
-- Validate LLM integration and API contracts
-- Establish data pipeline and validation
-- Build measurement and optimization capabilities
+**Specification-Driven Core** (Blue)
+- Formal contracts and validation at every boundary
+- Spec-to-code generation and bidirectional validation
+- Type safety through systematic specification
 
-**User-Facing Systems**
-- CLI tools and web interfaces
-- Design systems and user experience
-- Integration between different interaction modes
+**Testing Foundation** (Purple)  
+- Unit tests drive core module design
+- Integration tests validate system behavior
+- TDD/BDD methodology experiments
 
-**Data & Storage**
-- Local and scalable storage solutions
-- Cloud service abstractions
-- Data persistence and retrieval patterns
+**System Integration** (Green)
+- Monitoring and telemetry as first-class concerns
+- Analytics and logging infrastructure
+- Observability-driven development
 
-**Production Operations**
-- Release automation and CI/CD pipelines
-- Monitoring, logging, and analytics
-- Feature flags and deployment strategies
+**User Experience** (Orange)
+- CLI and web interfaces built on solid foundation
+- Query interface enabling natural language interaction
+- Design systems for consistent experience
 
-**Advanced Capabilities**
-- Multi-repository analysis
-- Plugin architecture and extensibility
-- Security hardening and performance optimization
-
-**Scale & Methodology**
-- Production deployment patterns
-- Developer experience optimization
-- Software development methodology integration
+**Production Systems** (Pink)
+- CI/CD and deployment automation
+- Security and performance optimization
+- Enterprise-grade capabilities
 
 ## Experiment Dependencies
 
