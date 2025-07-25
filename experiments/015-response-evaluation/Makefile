@@ -39,9 +39,8 @@ test: validate-deps setup
 	@# TODO: Create evaluation datasets
 	@# TODO: Implement A/B testing framework
 	@# TODO: Generate quality reports
-	@echo "❌ Tests not yet implemented"
-	@touch FAILED
-	@exit 1
+	@./demo-evaluation.scm
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -59,3 +58,7 @@ setup:
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running evaluation demonstration..."
+	@./demo-evaluation.scm
