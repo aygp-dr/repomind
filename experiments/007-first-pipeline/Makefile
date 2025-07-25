@@ -19,6 +19,7 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  make test          - Run all tests"
+	@echo "  make demo          - Show pipeline flow demo"
 	@echo "  make setup         - Set up experiment environment"
 	@echo "  make validate-deps - Check dependencies"
 	@echo "  make clean         - Clean test outputs"
@@ -52,6 +53,10 @@ setup:
 	@echo "Setting up experiment 07..."
 	@mkdir -p $(OUTPUT_DIR)
 	@mkdir -p $(OUTPUT_DIR)/pipeline-stages
+
+# Demo target to show pipeline flow
+demo:
+	@TEST_REPO="$(TEST_REPO)" MODEL="$(MODEL)" MAX_PROMPT_LENGTH="$(MAX_PROMPT_LENGTH)" ./demo-pipeline.sh
 
 clean:
 	@rm -rf $(OUTPUT_DIR)
