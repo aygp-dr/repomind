@@ -1,7 +1,7 @@
 # Experiment 11: Rate Limiting
 # Respect API rate limits and manage request quotas
 
-.PHONY: all test clean setup validate-deps help
+.PHONY: all test clean setup validate-deps help run
 
 # Configuration
 OUTPUT_DIR := test-outputs
@@ -55,3 +55,7 @@ setup:
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running rate limiting demonstration..."
+	@./demo-rate-limiting.scm
