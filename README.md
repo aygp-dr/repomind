@@ -19,80 +19,55 @@ RepoMind transforms static code repositories into queryable knowledge bases by c
 - **Scheme-Based**: Leverages Guile Scheme for powerful metaprogramming
 - **Spec-Driven**: Heavy focus on formal specifications and contracts
 
-## Experiment Flow
+## Development Through Experimentation
+
+RepoMind follows an **experiment-driven development** approach where each capability is validated through systematic experiments before implementation.
 
 ```mermaid
 graph TD
-    subgraph "Phase 1: Core [01-20]"
-        A[Foundation<br/>01-03] --> B[Data Pipeline<br/>04-06]
-        B --> C[Integration<br/>07-09]
-        C --> D[Optimization<br/>10-12]
-        D --> E[Interface<br/>13]
-        E --> F[Measurement<br/>14-16]
-        F --> G[Enhancement<br/>17-19]
-        G --> H[Launch<br/>20]
-    end
-    
-    subgraph "Phase 2: CLI [21-25]"
-        H --> I[CLI Standalone<br/>21]
-        I --> J[Web API<br/>22]
-        J --> K[Web Frontend<br/>23]
-        K --> L[Design System<br/>24]
-        L --> M[Integration<br/>25]
-    end
-    
-    subgraph "Phase 3: Storage [26-30]"
-        M --> N[SQLite<br/>26]
-        N --> O[PostgreSQL<br/>27]
-        O --> P[LocalStack<br/>28-29]
-        P --> Q[Abstraction<br/>30]
-    end
-    
-    subgraph "Phase 4: Release [31-35]"
-        Q --> R[Automation<br/>31-32]
-        R --> S[CI/CD<br/>33-34]
-        S --> T[Docker<br/>35]
-    end
-    
-    subgraph "Phase 5: Observability [36-40]"
-        T --> U[Logging<br/>36]
-        U --> V[Analytics<br/>37-38]
-        V --> W[Features<br/>39]
-        W --> X[Dashboard<br/>40]
-    end
-    
-    subgraph "Phase 6: Advanced [41-45]"
-        X --> Y[Multi-repo<br/>41]
-        Y --> Z[Plugins<br/>42]
-        Z --> AA[Security<br/>43]
-        AA --> AB[Performance<br/>44]
-        AB --> AC[Enterprise<br/>45]
-    end
-    
-    subgraph "Phase 7: Production [59-63]"
-        AC --> AD[Multi-region<br/>59]
-        AD --> AE[Canary<br/>60]
-        AE --> AF[Feature Flags<br/>61]
-        AF --> AG[Perf Testing<br/>62]
-        AG --> AH[Chaos<br/>63]
-    end
-    
-    subgraph "Phase 8: DevEx [64-68]"
-        AH --> AI[DX<br/>64]
-        AI --> AJ[InnerSource<br/>65]
-        AJ --> AK[Platform<br/>66]
-        AK --> AL[Portal<br/>67]
-        AL --> AM[Automation<br/>68]
-    end
-    
-    subgraph "Phase 9: Methodology [69-73]"
-        AM --> AN[DDD<br/>69]
-        AN --> AO[BDD<br/>70]
-        AO --> AP[TDD<br/>71]
-        AP --> AQ[Event Sourcing<br/>72]
-        AQ --> AR[CQRS<br/>73]
-    end
+    A[Core System] --> B[User Interfaces]
+    A --> C[Data Layer]
+    B --> D[Production Systems]
+    C --> D
+    D --> E[Observability]
+    E --> F[Advanced Features]
+    F --> G[Production Scale]
+    F --> H[Developer Experience]
+    G --> I[Development Methodology]
+    H --> I
 ```
+
+### Experiment-Driven Development Philosophy
+
+**Core System Foundation**
+- Validate LLM integration and API contracts
+- Establish data pipeline and validation
+- Build measurement and optimization capabilities
+
+**User-Facing Systems**
+- CLI tools and web interfaces
+- Design systems and user experience
+- Integration between different interaction modes
+
+**Data & Storage**
+- Local and scalable storage solutions
+- Cloud service abstractions
+- Data persistence and retrieval patterns
+
+**Production Operations**
+- Release automation and CI/CD pipelines
+- Monitoring, logging, and analytics
+- Feature flags and deployment strategies
+
+**Advanced Capabilities**
+- Multi-repository analysis
+- Plugin architecture and extensibility
+- Security hardening and performance optimization
+
+**Scale & Methodology**
+- Production deployment patterns
+- Developer experience optimization
+- Software development methodology integration
 
 ## Experiment Dependencies
 
