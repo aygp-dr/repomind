@@ -1,0 +1,92 @@
+# Build artifacts
+*.o
+*.so
+*.a
+build/
+dist/
+
+# Test outputs
+test-output/
+test-outputs/
+test-responses/
+results/
+*-results/
+*-data/
+*-reports/
+
+# Cache and temporary files
+.cache/
+*.cache
+temp/
+tmp/
+*.tmp
+*.log
+*.swp
+*~
+
+# Telemetry and evaluation data
+telemetry-data.jsonl
+evaluation-results/
+reports/*.html
+reports/*.csv
+
+# Ollama models (large files)
+models/
+*.bin
+*.gguf
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+.emacs.desktop
+.emacs.desktop.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python (for any Python tools)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.env
+
+# Node.js (if we add web dashboards)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Scheme compiled files
+*.go
+*.sls
+*.ss~
+*.scm~
+
+# Experiment specific
+experiments/*/PASSED
+experiments/*/FAILED
+experiments/*/validation-results/
+experiments/*/quality-reports/
+experiments/*/error-logs/
+experiments/*/cache-stats/
+experiments/*/large-datasets/
+experiments/*/performance-tests/
+experiments/*/telemetry-data/
+experiments/*/evaluation-reports/
+experiments/*/optimization-results/
+experiments/*/audit-logs/
+experiments/*/readiness-report/
+
+# Local configuration
+.env.local
+config.local.scm
+
+# Security - never commit these
+*.pem
+*.key
+.secrets/
+credentials.json
