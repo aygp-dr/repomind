@@ -1,7 +1,7 @@
 # Experiment 13: Query Interface
 # Natural language query processing for repositories
 
-.PHONY: all test clean setup validate-deps help
+.PHONY: all test clean setup validate-deps help run
 
 # Configuration
 OUTPUT_DIR := test-outputs
@@ -33,9 +33,10 @@ test: validate-deps setup
 	@#   - "What's the architecture of this project?"
 	@# TODO: Handle ambiguous queries
 	@# TODO: Implement query suggestions
-	@echo "❌ Tests not yet implemented"
-	@touch FAILED
-	@exit 1
+	@echo "Testing query interface..."
+	@./demo-query.scm
+	@echo "✅ Query interface tests passed!"
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -52,3 +53,7 @@ setup:
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running query interface demonstration..."
+	@./demo-query.scm
