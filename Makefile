@@ -2,7 +2,7 @@
 # Main build system entry point
 
 # Configuration
-SHELL := /bin/bash
+SHELL := /bin/sh
 GUILE := guile
 GUILD := guild
 GUILE_VERSION := 3.0
@@ -19,13 +19,14 @@ DATA_DIR := data
 EXPERIMENTS_DIR := experiments
 BUILD_DIR := build
 DOCS_DIR := docs
+ARCHIVE_DIR := archive
 
 # Modules
 MODULES := repomind cli github ollama validation tools cache telemetry pipeline
 
 # Default target
 .DEFAULT_GOAL := all
-.PHONY: all build test clean install uninstall help
+.PHONY: all build test clean install uninstall help init repo-archive deps
 
 all: build
 
@@ -118,6 +119,42 @@ distclean: clean
 	@echo "Removing all generated files..."
 	@rm -rf $(DATA_DIR)/telemetry/*
 	@rm -rf $(EVALS_DIR)/results/*
+	@rm -rf $(ARCHIVE_DIR)
+
+# CI/CD Dependencies
+deps:
+	@echo "Checking dependencies..."
+	@which $(GUILE) >/dev/null 2>&1 || (echo "❌ Guile not found"; exit 1)
+	@which gh >/dev/null 2>&1 || (echo "❌ GitHub CLI not found"; exit 1)
+	@which git >/dev/null 2>&1 || (echo "❌ Git not found"; exit 1)
+	@echo "✅ All dependencies satisfied"
+
+# Initialize project
+init: $(BUILD_DIR)
+	@echo "Initializing RepoMind..."
+	@mkdir -p $(ARCHIVE_DIR)
+	@grep -q "^$(ARCHIVE_DIR)/" .gitignore 2>/dev/null || echo "$(ARCHIVE_DIR)/" >> .gitignore
+	@echo "✅ RepoMind initialized"
+
+# Create archive directory (order-only prerequisite)
+$(ARCHIVE_DIR):
+	@mkdir -p $@
+
+# Archive GitHub data
+repo-archive: $(ARCHIVE_DIR)/issues.json $(ARCHIVE_DIR)/pull_requests.json $(ARCHIVE_DIR)/summary.json
+	@echo "✅ Repository data archived"
+
+$(ARCHIVE_DIR)/issues.json: | $(ARCHIVE_DIR)
+	@echo "Fetching issues..."
+	@gh issue list --json number,title,body,state,createdAt,updatedAt,labels,author --limit 1000 > $@
+
+$(ARCHIVE_DIR)/pull_requests.json: | $(ARCHIVE_DIR)
+	@echo "Fetching pull requests..."
+	@gh pr list --json number,title,body,state,createdAt,updatedAt,labels,author --limit 1000 > $@
+
+$(ARCHIVE_DIR)/summary.json: | $(ARCHIVE_DIR)
+	@echo "Fetching repository summary..."
+	@gh repo view --json name,owner,description,createdAt,updatedAt,primaryLanguage,repositoryTopics,isPrivate,defaultBranchRef > $@
 
 # Help
 help:
@@ -134,6 +171,9 @@ help:
 	@echo "  make repl         - Start development REPL"
 	@echo "  make check        - Run static analysis"
 	@echo "  make docs         - Build documentation"
+	@echo "  make deps         - Check CI/CD dependencies"
+	@echo "  make init         - Initialize project structure"
+	@echo "  make repo-archive - Archive GitHub repository data"
 	@echo ""
 	@echo "Evaluation targets:"
 	@echo "  make evals        - Run model evaluations"
