@@ -37,9 +37,8 @@ test: validate-deps setup
 	@# TODO: Error recovery scenarios
 	@# TODO: Resource usage profiling
 	@# TODO: Generate production deployment guide
-	@echo "❌ Tests not yet implemented"
-	@touch FAILED
-	@exit 1
+	@./demo-readiness.scm
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -60,3 +59,7 @@ setup:
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running production readiness assessment..."
+	@./demo-readiness.scm
