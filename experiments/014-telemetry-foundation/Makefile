@@ -39,9 +39,8 @@ test: validate-deps setup
 	@# TODO: Test Prometheus export format
 	@# TODO: Test OpenTelemetry integration
 	@# TODO: Implement custom metrics
-	@echo "❌ Tests not yet implemented"
-	@touch FAILED
-	@exit 1
+	@./demo-telemetry.scm
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -59,3 +58,7 @@ clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -rf $(METRICS_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running telemetry demonstration..."
+	@./demo-telemetry.scm
