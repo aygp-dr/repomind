@@ -18,12 +18,14 @@ help:
 	@echo "Targets:"
 	@echo "  make test          - Generate visualizations"
 	@echo "  make serve         - Serve interactive visualizations"
+	@echo "  make audit         - Audit all experiment Makefiles"
 	@echo "  make setup         - Set up experiment environment"
 	@echo "  make validate-deps - Check dependencies"
 	@echo "  make clean         - Clean generated files"
 	@echo ""
 	@echo "Variables:"
 	@echo "  SERVE_PORT=N       - Port for visualization server"
+	@echo "  PROJECT_ROOT=path  - Project root directory (for audit)"
 
 test: validate-deps setup
 	@echo "🟢 Running Experiment 092: Development Visualization"
@@ -44,6 +46,10 @@ serve: setup
 	@echo "Starting visualization server on port $(SERVE_PORT)..."
 	@# TODO: Implement visualization server
 	@echo "❌ Server not yet implemented"
+
+audit:
+	@echo "🔍 Auditing experiment Makefiles..."
+	@PROJECT_ROOT="$(PROJECT_ROOT)" ./audit-makefiles.sh
 
 validate-deps:
 	@echo "Checking dependencies..."

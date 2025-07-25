@@ -55,6 +55,12 @@ make serve          # Start interactive web server
 - D3.js for interactive visualizations
 - Web server for serving interactive content
 
+## Implementation Notes
+- All experiments include Makefiles that list their dependencies
+- The `validate-deps` target in each Makefile shows which experiments must pass first
+- This dependency information will be parsed to generate visualizations
+- Audit scripts will ensure all experiments have proper Makefile structure
+
 ## Results
 Status: 🟡 Future Work - Not currently needed but planned for later development phases
 
