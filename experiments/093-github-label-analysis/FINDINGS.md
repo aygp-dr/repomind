@@ -71,3 +71,32 @@ Keep the GitHub defaults and add:
 2. Create organization label guide
 3. Build automation for label application
 4. Monitor adoption and iterate
+
+## Implementation Notes
+
+### RFC Label Addition (Test Run)
+- Successfully added RFC label to 70/75 public repos
+- 4 repos already had the label
+- 1 error (para-spacy-lisp - likely permissions issue)
+- **94% adoption rate** achieved in single run
+
+### Observed Issues
+1. **GitHub API Caching**: Labels may not appear immediately in queries after creation
+   - `gh label create` reports success
+   - `gh label list` may not show the label for several seconds
+   - Using `--force` flag reveals label already exists
+   
+2. **Query Timing**: Need to account for eventual consistency
+   - Label creation is immediate
+   - Label queries may lag behind
+   - Verification scripts should include retry logic or delays
+
+3. **Pagination**: Some repos may require explicit pagination handling
+   - Current scripts use `--limit 100` for safety
+   - May need to handle repos with >100 labels
+
+### Lessons Learned
+- Bulk operations work well with proper error handling
+- Verification should be separate from creation
+- API caching requires patience in verification
+- Error reporting helps identify permission issues

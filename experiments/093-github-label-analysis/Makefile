@@ -17,12 +17,14 @@ help:
 	@echo "Analyze and standardize GitHub labels"
 	@echo ""
 	@echo "Targets:"
-	@echo "  make test          - Run analysis"
-	@echo "  make analyze-labels - Analyze labels from public repos"
-	@echo "  make labels-report  - Generate comprehensive org-wide report"
-	@echo "  make create-labels  - Create recommended labels"
-	@echo "  make setup         - Set up experiment environment"
-	@echo "  make clean         - Clean analysis files"
+	@echo "  make test              - Run analysis"
+	@echo "  make analyze-labels     - Analyze labels from public repos"
+	@echo "  make labels-report      - Generate comprehensive org-wide report"
+	@echo "  make create-labels      - Create recommended labels"
+	@echo "  make add-rfc-label      - Add RFC label to all repos"
+	@echo "  make add-experiment-label - Add experiment label to all repos"
+	@echo "  make setup             - Set up experiment environment"
+	@echo "  make clean             - Clean analysis files"
 
 test: validate-deps setup test-gh-access analyze-labels
 	@echo "🟢 Running Experiment 093: GitHub Label Analysis"
@@ -51,6 +53,20 @@ labels-report:
 create-labels:
 	@echo "🏷️  Creating recommended labels for repomind..."
 	@./create-project-labels.sh
+
+add-rfc-label:
+	@echo "📋 Adding RFC label to all aygp-dr repos..."
+	@./add-label-to-all-repos.sh "rfc" "c2e0c6" "Request for Comments - needs discussion"
+
+add-experiment-label:
+	@echo "🧪 Adding experiment label to all aygp-dr repos..."
+	@./add-label-to-all-repos.sh "experiment" "7057ff" "Experimental work or investigation"
+
+verify-rfc:
+	@./verify-label-adoption.sh rfc
+
+verify-experiment:
+	@./verify-label-adoption.sh experiment
 
 validate-deps:
 	@echo "Checking dependencies..."
