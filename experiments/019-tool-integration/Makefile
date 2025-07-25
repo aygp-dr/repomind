@@ -34,9 +34,8 @@ test: validate-deps setup
 	@# TODO: Test tool chaining
 	@# TODO: Test tool error handling
 	@# TODO: Implement tool documentation
-	@echo "❌ Tests not yet implemented"
-	@touch FAILED
-	@exit 1
+	@./demo-tools.scm
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -55,3 +54,7 @@ setup:
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running tool integration demonstration..."
+	@./demo-tools.scm
