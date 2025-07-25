@@ -156,19 +156,49 @@ graph TD
 - **API Specs**: OpenAPI 3.1.0
 - **Type Systems**: Gradual typing experiments
 
+## Current Experiment Status
+
+🧪 **Experiment-Driven Development in Progress**
+
+### Completed Experiments (Working Demonstrations)
+- ✅ **Experiment 009**: Error handling with retry logic and circuit breakers
+- ✅ **Experiment 010**: LRU cache with TTL support (43% hit rate demonstrated)  
+- ✅ **Experiment 011**: Token bucket rate limiting for API quotas
+- ✅ **Experiment 012**: Concurrent request patterns with work queues
+
+### Ready for Implementation
+- 📋 **Experiments 001-008**: Core foundations (scaffolded, awaiting implementation)
+- 📋 **Experiments 013-020**: Advanced features (scaffolded, documented)
+- 📋 **Experiments 021-100**: Future phases (planned)
+
+### Experiment Philosophy
+Each experiment follows: `gmake -C experiments/XXX-name run`
+
+**Benefits of this approach:**
+- **Rapid prototyping** - Test ideas quickly without full integration
+- **Risk reduction** - Discover issues early in isolated contexts  
+- **Knowledge capture** - Document discoveries for future implementers
+- **Parallel development** - Multiple agents can work on different experiments
+- **Incremental progress** - Each experiment builds system understanding
+
 ## Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/repomind.git
+# Clone the repository  
+git clone https://github.com/aygp-dr/repomind.git
 cd repomind
 
 # Check dependencies
 make validate-deps
 
-# Run experiments
-make experiment-01
-make phase-1  # Run all phase 1 experiments
+# Run working experiments
+gmake -C experiments/009-error-handling run
+gmake -C experiments/010-caching-layer run
+gmake -C experiments/011-rate-limiting run
+gmake -C experiments/012-concurrent-requests run
+
+# Run all phase 1 experiments (when ready)
+make phase-1
 ```
 
 ## Architecture

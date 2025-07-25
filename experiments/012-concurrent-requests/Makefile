@@ -1,7 +1,7 @@
 # Experiment 12: Concurrent Requests
 # Parallel processing for improved performance
 
-.PHONY: all test clean setup validate-deps help
+.PHONY: all test clean setup validate-deps help run
 
 # Configuration
 OUTPUT_DIR := test-outputs
@@ -55,3 +55,7 @@ setup:
 clean:
 	@rm -rf $(OUTPUT_DIR)
 	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running concurrent requests demonstration..."
+	@./demo-concurrent-simple.scm
