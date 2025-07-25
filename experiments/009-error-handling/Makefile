@@ -1,7 +1,7 @@
 # Experiment 09: Error Handling
 # Robust error handling and recovery mechanisms
 
-.PHONY: all test clean setup validate-deps help
+.PHONY: all test clean setup validate-deps help run
 
 # Configuration
 OUTPUT_DIR := test-outputs
@@ -36,8 +36,10 @@ test: validate-deps setup
 	@# TODO: Test partial failure recovery
 	@# TODO: Test graceful degradation
 	@# TODO: Implement circuit breaker pattern
-	@echo "❌ Tests not yet implemented"
-	@exit 1
+	@echo "Testing error handling and retry logic..."
+	@cd $(shell pwd) && ./test-error-handling.scm || (touch FAILED && exit 1)
+	@echo "✅ Error handling tests passed!"
+	@touch PASSED
 
 validate-deps:
 	@echo "Checking dependencies..."
@@ -53,3 +55,8 @@ setup:
 
 clean:
 	@rm -rf $(OUTPUT_DIR)
+	@rm -f PASSED FAILED *.log
+
+run: setup
+	@echo "🧪 Running error handling demonstration..."
+	@./demo-error-handling.scm
