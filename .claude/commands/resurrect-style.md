@@ -27,6 +27,7 @@ git commit -m "feat: add experiment 004 foundation" \
 - **NEVER** use `git add -A` or `git add .`
 - **ALWAYS** add files specifically
 - **NO** "generated with" in commit messages
+- **SECURITY**: These rules prevent credential exposure (see issue #5)
 
 ### 4. Git Notes Are MANDATORY
 After EVERY commit:
@@ -134,6 +135,19 @@ echo $EXPERIMENTS_DIR  # Should show experiments path
 - **Stay in root for context**
 - **Help future implementers**
 - **Test simplest approach first**
+
+## CRITICAL SECURITY PRACTICES
+
+### File Modifications
+- **ALWAYS** use Read tool before Edit tool
+- **NEVER** use `cat` and shell redirection for file updates
+- **VERIFY** file contents after modifications
+- **CHECK** .gitignore with `git check-ignore <filename>`
+
+### Why This Matters
+- Shell redirections can corrupt files (see issue #5: credentials.jsonarchive/)
+- Read tool shows line numbers and exact content
+- Prevents security vulnerabilities from malformed config files
 
 ## IF STYLE IS LOST, READ:
 1. `.claude/commands/working-style.md` - Full guide
