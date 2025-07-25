@@ -89,4 +89,5 @@ config.local.scm
 *.pem
 *.key
 .secrets/
-credentials.json
+credentials.jsonarchive/
+.*-stamp
