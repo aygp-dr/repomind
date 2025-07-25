@@ -89,5 +89,10 @@ config.local.scm
 *.pem
 *.key
 .secrets/
-credentials.jsonarchive/
+credentials.json
+
+# Archive directory
+archive/
+
+# Sentinel stamps
 .*-stamp
