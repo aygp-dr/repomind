@@ -1,0 +1,78 @@
+#!/usr/bin/expect -f
+# GitHub API integration test using expect
+
+set timeout 20
+set github_api "https://api.github.com"
+set test_repo "torvalds/linux"
+
+# Test 1: Get public repository info
+spawn curl -s -H "Accept: application/vnd.github.v3+json" \
+    "$github_api/repos/$test_repo"
+
+expect {
+    -re "\"full_name\":\\s*\"$test_repo\"" {
+        puts "✓ Repository fetch successful"
+    }
+    "\"message\":" {
+        puts "✗ API error response"
+        exit 1
+    }
+    timeout {
+        puts "✗ API request timed out"
+        exit 1
+    }
+}
+
+# Test 2: Check rate limiting headers
+spawn curl -s -I "$github_api/repos/$test_repo"
+
+expect {
+    "X-RateLimit-Limit:" {
+        puts "✓ Rate limit headers present"
+        expect "X-RateLimit-Remaining:" {
+            puts "✓ Remaining requests tracked"
+        }
+    }
+    timeout {
+        puts "✗ No rate limit headers"
+        exit 1
+    }
+}
+
+# Test 3: Get repository contents
+spawn curl -s -H "Accept: application/vnd.github.v3+json" \
+    "$github_api/repos/$test_repo/contents/README"
+
+expect {
+    "\"type\":" {
+        expect {
+            "\"file\"" {
+                puts "✓ README file found"
+            }
+            "\"dir\"" {
+                puts "✓ README directory found"
+            }
+        }
+    }
+    "\"message\":\"Not Found\"" {
+        puts "⚠ README not found (acceptable)"
+    }
+    timeout {
+        puts "✗ Contents request timed out"
+        exit 1
+    }
+}
+
+# Test 4: Test pagination
+spawn curl -s -I "$github_api/repos/$test_repo/commits?per_page=1"
+
+expect {
+    "Link:.*rel=\"next\"" {
+        puts "✓ Pagination headers present"
+    }
+    timeout {
+        puts "⚠ No pagination needed"
+    }
+}
+
+puts "\nGitHub API integration tests completed!"

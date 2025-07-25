@@ -1,0 +1,78 @@
+#!/usr/bin/expect -f
+# Ollama integration test using expect
+
+set timeout 30
+set ollama_url "http://localhost:11434"
+
+# Test 1: Check if Ollama is running
+spawn curl -s "$ollama_url/api/tags"
+expect {
+    "models" {
+        puts "✓ Ollama is running"
+    }
+    timeout {
+        puts "✗ Ollama is not responding"
+        exit 1
+    }
+}
+
+# Test 2: Test basic generation
+spawn curl -s -X POST "$ollama_url/api/generate" \
+    -H "Content-Type: application/json" \
+    -d {{"model": "llama3.2", "prompt": "Hello", "stream": false}}
+
+expect {
+    "response" {
+        puts "✓ Basic generation works"
+    }
+    "error" {
+        puts "✗ Generation failed"
+        exit 1
+    }
+    timeout {
+        puts "✗ Generation timed out"
+        exit 1
+    }
+}
+
+# Test 3: Test JSON format generation
+spawn curl -s -X POST "$ollama_url/api/generate" \
+    -H "Content-Type: application/json" \
+    -d {{"model": "llama3.2", "prompt": "Return a JSON object with name and age", "format": "json", "stream": false}}
+
+expect {
+    -re "\\{.*name.*:.*age.*:.*\\}" {
+        puts "✓ JSON format generation works"
+    }
+    timeout {
+        puts "✗ JSON format generation failed"
+        exit 1
+    }
+}
+
+# Test 4: Test streaming response
+spawn curl -s -X POST "$ollama_url/api/generate" \
+    -H "Content-Type: application/json" \
+    -d {{"model": "llama3.2", "prompt": "Count to 3", "stream": true}}
+
+set count 0
+expect {
+    "\"done\":false" {
+        incr count
+        exp_continue
+    }
+    "\"done\":true" {
+        if {$count > 0} {
+            puts "✓ Streaming works ($count chunks)"
+        } else {
+            puts "✗ No streaming chunks received"
+            exit 1
+        }
+    }
+    timeout {
+        puts "✗ Streaming timed out"
+        exit 1
+    }
+}
+
+puts "\nAll Ollama integration tests passed!"
