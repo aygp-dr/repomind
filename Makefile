@@ -21,6 +21,14 @@ BUILD_DIR := build
 DOCS_DIR := docs
 ARCHIVE_DIR := archive
 
+# Sentinel files for directory creation
+# Using sentinel files avoids issues with directory timestamps
+# See: https://www.gnu.org/software/make/manual/html_node/Empty-Targets.html
+# and: Managing Projects with GNU Make, 3rd Edition (O'Reilly) Chapter 4
+BUILD_SENTINEL := .build-dir-stamp
+ARCHIVE_SENTINEL := .archive-dir-stamp
+DOCS_SENTINEL := .docs-dir-stamp
+
 # Modules
 MODULES := repomind cli github ollama validation tools cache telemetry pipeline
 
@@ -31,14 +39,15 @@ MODULES := repomind cli github ollama validation tools cache telemetry pipeline
 all: build
 
 # Build targets
-build: $(BUILD_DIR)
+build: $(BUILD_SENTINEL)
 	@echo "Building RepoMind..."
 	@$(MAKE) -C $(SRC_DIR) build
 	@$(MAKE) -C $(SPECS_DIR) validate
 	@echo "Build complete."
 
-$(BUILD_DIR):
+$(BUILD_SENTINEL):
 	@mkdir -p $(BUILD_DIR)
+	@touch $@
 
 # Test targets
 test: unit-tests integration-tests expect-tests
@@ -111,6 +120,7 @@ clean:
 	@$(MAKE) -C $(EXPERIMENTS_DIR) clean
 	@$(MAKE) -C $(EVALS_DIR) clean
 	@rm -rf $(BUILD_DIR)
+	@rm -f $(BUILD_SENTINEL) $(ARCHIVE_SENTINEL) $(DOCS_SENTINEL)
 	@find . -name "*.go" -delete
 	@find . -name "*.log" -delete
 	@find . -name "*~" -delete
@@ -130,29 +140,31 @@ deps:
 	@echo "✅ All dependencies satisfied"
 
 # Initialize project
-init: $(BUILD_DIR)
+init: $(BUILD_SENTINEL)
 	@echo "Initializing RepoMind..."
 	@mkdir -p $(ARCHIVE_DIR)
 	@grep -q "^$(ARCHIVE_DIR)/" .gitignore 2>/dev/null || echo "$(ARCHIVE_DIR)/" >> .gitignore
+	@grep -q "^\\..*-stamp" .gitignore 2>/dev/null || echo ".*-stamp" >> .gitignore
 	@echo "✅ RepoMind initialized"
 
-# Create archive directory (order-only prerequisite)
-$(ARCHIVE_DIR):
-	@mkdir -p $@
+# Archive directory sentinel
+$(ARCHIVE_SENTINEL):
+	@mkdir -p $(ARCHIVE_DIR)
+	@touch $@
 
 # Archive GitHub data
 repo-archive: $(ARCHIVE_DIR)/issues.json $(ARCHIVE_DIR)/pull_requests.json $(ARCHIVE_DIR)/summary.json
 	@echo "✅ Repository data archived"
 
-$(ARCHIVE_DIR)/issues.json: | $(ARCHIVE_DIR)
+$(ARCHIVE_DIR)/issues.json: $(ARCHIVE_SENTINEL)
 	@echo "Fetching issues..."
 	@gh issue list --json number,title,body,state,createdAt,updatedAt,labels,author --limit 1000 > $@
 
-$(ARCHIVE_DIR)/pull_requests.json: | $(ARCHIVE_DIR)
+$(ARCHIVE_DIR)/pull_requests.json: $(ARCHIVE_SENTINEL)
 	@echo "Fetching pull requests..."
 	@gh pr list --json number,title,body,state,createdAt,updatedAt,labels,author --limit 1000 > $@
 
-$(ARCHIVE_DIR)/summary.json: | $(ARCHIVE_DIR)
+$(ARCHIVE_DIR)/summary.json: $(ARCHIVE_SENTINEL)
 	@echo "Fetching repository summary..."
 	@gh repo view --json name,owner,description,createdAt,updatedAt,primaryLanguage,repositoryTopics,isPrivate,defaultBranchRef > $@
 
