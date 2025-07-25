@@ -140,9 +140,8 @@ deps:
 	@echo "✅ All dependencies satisfied"
 
 # Initialize project
-init: $(BUILD_SENTINEL)
+init: $(BUILD_SENTINEL) $(ARCHIVE_SENTINEL)
 	@echo "Initializing RepoMind..."
-	@mkdir -p $(ARCHIVE_DIR)
 	@grep -q "^$(ARCHIVE_DIR)/" .gitignore 2>/dev/null || echo "$(ARCHIVE_DIR)/" >> .gitignore
 	@echo "✅ RepoMind initialized"
 
