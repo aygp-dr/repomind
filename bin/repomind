@@ -1,0 +1,9 @@
+#!/usr/bin/env guile
+!#
+;; RepoMind executable wrapper
+
+(add-to-load-path (string-append (dirname (dirname (current-filename))) "/src"))
+
+(use-modules (cli main))
+
+(main (command-line))
