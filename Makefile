@@ -3,6 +3,8 @@
 
 # Configuration
 SHELL := /bin/sh
+PROJECT_NAME := repomind
+PROJECT_ROOT := $(shell pwd)
 GUILE := guile
 GUILD := guild
 GUILE_VERSION := 3.0
@@ -112,6 +114,21 @@ repl:
 		--listen=37146 \
 		-c "(use-modules (repomind)) (display \"RepoMind REPL ready\\n\")"
 
+# Tmux/Emacs development session
+dev-session:
+	@echo "Starting tmux development session for $(PROJECT_NAME)..."
+	@tmux has-session -t $(PROJECT_NAME) 2>/dev/null && tmux kill-session -t $(PROJECT_NAME) || true
+	@tmux new-session -d -s $(PROJECT_NAME) "emacs -nw -Q -l $(PROJECT_ROOT)/$(PROJECT_NAME).el"
+	@echo "Development session started. Connect with: tmux attach -t $(PROJECT_NAME)"
+	@echo "Session TTY: $$(tmux list-panes -t $(PROJECT_NAME) -F '#{pane_tty}')"
+
+dev-attach:
+	@tmux attach-session -t $(PROJECT_NAME) || echo "No session found. Run 'make dev-session' first."
+
+dev-stop:
+	@tmux kill-session -t $(PROJECT_NAME) 2>/dev/null || echo "No session to stop."
+	@echo "Development session stopped."
+
 # Clean targets
 clean:
 	@echo "Cleaning build artifacts..."
@@ -179,6 +196,9 @@ help:
 	@echo ""
 	@echo "Development targets:"
 	@echo "  make repl         - Start development REPL"
+	@echo "  make dev-session  - Start tmux/Emacs development session"
+	@echo "  make dev-attach   - Attach to existing dev session"
+	@echo "  make dev-stop     - Stop development session"
 	@echo "  make check        - Run static analysis"
 	@echo "  make docs         - Build documentation"
 	@echo "  make deps         - Check CI/CD dependencies"
@@ -194,6 +214,8 @@ help:
 	@echo "  make experiment-N - Run specific experiment"
 	@echo ""
 	@echo "Variables:"
+	@echo "  PROJECT_NAME      - Project name (default: repomind)"
+	@echo "  PROJECT_ROOT      - Project root directory"
 	@echo "  PREFIX=path       - Installation prefix (default: /usr/local)"
 	@echo "  GUILE=path        - Path to guile (default: guile)"
 
